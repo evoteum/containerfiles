@@ -1,0 +1,27 @@
+ARG GO_VERSION=1.21
+FROM golang:${GO_VERSION}-alpine AS builder
+
+ARG APP_NAME=app
+ARG BUILD_FLAGS=""
+ARG TARGET_OS=linux
+ARG TARGET_ARCH=amd64
+ARG ENV_FILE="env.list"
+WORKDIR /app
+COPY . .
+ENV GOOS=${TARGET_OS}
+ENV GOARCH=${TARGET_ARCH}
+RUN go mod tidy && go mod download
+RUN go build ${BUILD_FLAGS} -o ${APP_NAME}
+
+
+FROM alpine:latest
+
+WORKDIR /app
+ARG APP_NAME=app
+COPY --from=builder /app/${APP_NAME} /usr/local/bin/${APP_NAME}
+ARG ENV_FILE="env.list"
+COPY ${ENV_FILE} /app/.env
+RUN if [ -f /app/.env ]; then cat /app/.env >> /etc/environment; fi
+RUN chmod +x /usr/local/bin/${APP_NAME}
+EXPOSE 8080
+CMD ["/usr/local/bin/app"]
