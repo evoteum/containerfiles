@@ -1,4 +1,5 @@
-FROM python:latest
+ARG LANGUAGE_VERSION=3.13
+FROM python:${LANGUAGE_VERSION}
 WORKDIR /app
 COPY . .
 RUN pip install --no-cache-dir -r requirements.txt
