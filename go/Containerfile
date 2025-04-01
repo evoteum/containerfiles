@@ -2,7 +2,7 @@ ARG LANGUAGE_VERSION
 FROM golang:${LANGUAGE_VERSION}-alpine AS builder
 
 ARG APP_NAME=app
-ARG BUILD_FLAGS=""
+ARG BUILD_FLAGS
 ARG TARGET_OS=linux
 ARG TARGET_ARCH=amd64
 ARG ENV_FILE="env.list"
@@ -10,8 +10,12 @@ WORKDIR /app
 COPY . .
 ENV GOOS=${TARGET_OS}
 ENV GOARCH=${TARGET_ARCH}
-RUN go mod download && go build ${BUILD_FLAGS} -o ${APP_NAME}
-
+RUN go mod download && \
+    if [ "$BUILD_FLAGS" = "NONE" ]; then \
+        go build -o ${APP_NAME}; \
+    else \
+        go build ${BUILD_FLAGS} -o ${APP_NAME}; \
+    fi
 
 FROM alpine:3.21.3
 
