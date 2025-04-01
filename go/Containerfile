@@ -10,11 +10,10 @@ WORKDIR /app
 COPY . .
 ENV GOOS=${TARGET_OS}
 ENV GOARCH=${TARGET_ARCH}
-RUN go mod tidy && go mod download
-RUN go build ${BUILD_FLAGS} -o ${APP_NAME}
+RUN go mod download && go build ${BUILD_FLAGS} -o ${APP_NAME}
 
 
-FROM alpine:latest
+FROM alpine:3.21.3
 
 WORKDIR /app
 ARG APP_NAME=app
