@@ -22,6 +22,9 @@ FROM alpine:3.21.3
 WORKDIR /app
 ARG APP_NAME=app
 COPY --from=builder /app/${APP_NAME} /usr/local/bin/${APP_NAME}
+COPY --from=builder /app/templates /usr/local/bin/templates
+COPY --from=builder /app/static /app/static
+
 ARG ENV_FILE="env.list"
 COPY ${ENV_FILE} /app/.env
 RUN if [ -f /app/.env ]; then cat /app/.env >> /etc/environment; fi
