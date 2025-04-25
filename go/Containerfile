@@ -1,5 +1,5 @@
 ARG LANGUAGE_VERSION
-FROM golang:1.21-alpine AS builder
+FROM golang:${LANGUAGE_VERSION}-alpine AS builder
 
 ARG APP_NAME="app"
 ARG BUILD_FLAGS="NONE"
