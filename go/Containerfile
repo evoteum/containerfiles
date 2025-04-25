@@ -23,11 +23,9 @@ FROM alpine:3.21.3
 WORKDIR /app
 ARG APP_NAME=app
 
-COPY --from=builder \
-  /app/${APP_NAME} \
-  /app/templates \
-  /app/static \
-  /app/
+COPY --from=builder /app/${APP_NAME} /app/${APP_NAME}
+COPY --from=builder /app/templates /app/templates
+COPY --from=builder /app/static /app/static
 
 RUN chmod +x /app/${APP_NAME}
 EXPOSE 8080
