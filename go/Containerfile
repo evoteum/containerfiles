@@ -17,6 +17,7 @@ RUN go mod download && \
         go build ${BUILD_FLAGS} -o ${APP_NAME}; \
     fi
 
+
 FROM alpine:3.21.3
 
 WORKDIR /app
@@ -28,7 +29,6 @@ COPY --from=builder \
   /app/static \
   /app/
 
-RUN if [ -f /app/.env ]; then cat /app/.env >> /etc/environment; fi
-RUN chmod +x /usr/local/bin/${APP_NAME}
+RUN chmod +x /app/${APP_NAME}
 EXPOSE 8080
 CMD ["/app/app"]
