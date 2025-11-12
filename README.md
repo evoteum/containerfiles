@@ -45,18 +45,13 @@ The configuration of this repo is managed by OpenTofu in [estate-repos](https://
 ## Table of Contents
 
 [//]: # (REQUIRED)
-[//]: # (Delete as appropriate)
+[//]: # (TOCGEN_TABLE_OF_CONTENTS_START)
 
-1. [Security](#security)
-1. [Background](#background)
-1. [Install](#install)
-1. [Usage](#usage)
-1. [Any extra sections as required]
-1. [API](#api)
-1. [Maintainers](#maintainers)
-1. [Thanks](#thanks)
-1. [Contributing](#contributing)
-1. [License](#license)
+[//]: # (Table of contents will be automatically generated and inserted here.)
+
+[//]: # (TOCGEN_TABLE_OF_CONTENTS_END)
+
+
 
 [//]: # (## Security)
 [//]: # (OPTIONAL)
