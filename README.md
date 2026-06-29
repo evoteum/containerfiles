@@ -35,12 +35,14 @@ Reusable Containerfiles
 [//]: # (Must not have its own title)
 [//]: # (A detailed description of the repo)
 
-
-
+Reusable Containerfiles for building Go, Python, and HTML (nginx) container images
+across the Evoteum estate. Each Containerfile accepts build arguments so the same base
+definition works for any project of that language type.
 
 
 [//]: # (Keep this note to help people understand how to configure this repo.)
-The configuration of this repo is managed by OpenTofu in [estate-repos](https://github.com/evoteum/estate-repos).
+The configuration of this repo is managed by OpenTofu in
+[estate-repos](https://github.com/evoteum/estate-repos).
 
 ## Table of Contents
 
@@ -63,17 +65,26 @@ The configuration of this repo is managed by OpenTofu in [estate-repos](https://
 [//]: # (OPTIONAL)
 [//]: # (Explain the motivation and abstract dependencies for this repo)
 
-## Install
-
-[//]: # (Explain how to install the thing.)
-[//]: # (OPTIONAL IF documentation repo)
-[//]: # (ELSE REQUIRED)
-
-
+[//]: # (## Install)
+[//]: # (OPTIONAL - documentation repo)
 
 ## Usage
 [//]: # (REQUIRED)
 [//]: # (Explain what the thing does. Use screenshots and/or videos.)
+
+Containerfiles are consumed automatically by the `container-build-and-push` reusable workflow in [estate-reusable-workflows](https://github.com/evoteum/estate-reusable-workflows). The workflow selects the appropriate Containerfile based on the `REPOSITORY_LANGUAGE` variable set for each repo by [estate-repos](https://github.com/evoteum/estate-repos).
+
+### Available Containerfiles
+
+| Language | Base image                           | Notes                                                                |
+|----------|--------------------------------------|----------------------------------------------------------------------|
+| `go`     | `golang:${LANGUAGE_VERSION}-alpine`  | Multi-stage build; produces a minimal Alpine runtime image           |
+| `html`   | `nginxinc/nginx-unprivileged:alpine` | Serves static files via nginx; expects an `nginx.conf` in the source |
+| `python` | `python:${LANGUAGE_VERSION}`         | Installs from `requirements.txt`; entrypoint is `main.py`            |
+
+### Build arguments
+
+Each Containerfile accepts a `LANGUAGE_VERSION` build argument, set automatically from the `REPOSITORY_LANGUAGE_VERSION` variable in the target repository.
 
 
 
@@ -83,7 +94,21 @@ The configuration of this repo is managed by OpenTofu in [estate-repos](https://
 [//]: # (This is a space for ≥0 sections to be included,)
 [//]: # (each of which must have their own titles.)
 
+## Why "Containerfiles" and not "Dockerfiles"
 
+`Dockerfile` is a Docker-specific name for what is actually an OCI-standard build
+format. Tools like Podman and Buildah use the same syntax but use the name
+`Containerfile` to reflect that the format is not Docker-specific. We follow that
+convention here; the files are identical in syntax, but the name accurately reflects
+that they are not tied to Docker.
+
+## A better approach
+
+[Cloud Native Buildpacks](https://buildpacks.io/) are a superior alternative to
+centralised Containerfiles. They automatically detect the language and build your
+application without requiring a hand-maintained Containerfile per language. If you are
+considering adopting this pattern, buildpacks should be evaluated before extending this
+repository further. We intend to migrate to Cloud Native Buildpacks asap. 
 
 [//]: # (## API)
 [//]: # (OPTIONAL)
