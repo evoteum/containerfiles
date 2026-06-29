@@ -49,7 +49,13 @@ The configuration of this repo is managed by OpenTofu in
 [//]: # (REQUIRED)
 [//]: # (TOCGEN_TABLE_OF_CONTENTS_START)
 
-[//]: # (Table of contents will be automatically generated and inserted here.)
+- [Usage](#usage)
+    - [Available Containerfiles](#available-containerfiles)
+    - [Build arguments](#build-arguments)
+- [Why "Containerfiles" and not "Dockerfiles"](#why-containerfiles-and-not-dockerfiles)
+- [A better approach](#a-better-approach)
+- [Contributing](#contributing)
+- [License](#license)
 
 [//]: # (TOCGEN_TABLE_OF_CONTENTS_END)
 
